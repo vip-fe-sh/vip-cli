@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+
+var logger = require('../lib/logger')
+var request = require('request')
+var chalk = require('chalk')
+
+/**
+ * Padding.
+ */
+
+console.log()
+console.log('  Available official templates:')
+console.log()
+console.log(
+    '  ' + chalk.yellow('★') +
+    '  ' + chalk.blue('vips') +
+    ' - ' + 'A full-featured Webpack + vue setup in VIPS')
+process.on('exit', function () {
+  console.log()
+})
+
+/**
+ * List repos.
+ */
+
+request({
+  url: 'https://api.github.com/users/vuejs-templates/repos',
+  headers: {
+    'User-Agent': 'vip-cli'
+  }
+}, function (err, res, body) {
+  if (err) logger.fatal(err)
+  JSON.parse(body).forEach(function (repo) {
+    console.log(
+      '  ' + chalk.yellow('★') +
+      '  ' + chalk.blue(repo.name) +
+      ' - ' + repo.description)
+  })
+})
