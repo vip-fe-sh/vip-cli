@@ -13,13 +13,13 @@ $ npm install -g vip-cli
 ### Usage
 
 ``` bash
-$ vip init vips my-project
-$ cd my-project
+$ vip init vips vip-project
+$ cd vip-project
 $ npm install
 $ npm run dev
 ```
 
-The above command pulls the template from [vuejs-templates/webpack](https://github.com/vuejs-templates/webpack), prompts for some information, and generates the project at `./my-project/`.
+The above command pulls the template from [vip-fe-sh/template-vips](https://github.com/vip-fe-sh/template-vips), prompts for some information, and generates the project at `./vip-project/`.
 
 ### Official Templates
 

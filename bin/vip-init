@@ -101,7 +101,7 @@ function run () {
     // use official templates
     if (!hasSlash) {
       if (template === 'vips') {
-        template = 'ppxu/template-vips'
+        template = 'vip-fe-sh/template-vips'
       } else {
         template = 'vuejs-templates/' + template
       }
@@ -118,6 +118,8 @@ function run () {
         rm(tmp)
         console.log()
         logger.success('Generated "%s".', name)
+        console.log()
+        console.log(chalk.cyan.bold('Execute the following commands:'))
         console.log()
         console.log('  ' + chalk.green('cd "%s', name))
         console.log('  ' + chalk.green('npm install'))

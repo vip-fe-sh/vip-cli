@@ -14,10 +14,7 @@ console.log()
 console.log(
     '  ' + chalk.yellow('★') +
     '  ' + chalk.blue('vips') +
-    ' - ' + 'A full-featured Webpack + vue setup in VIPS')
-process.on('exit', function () {
-  console.log()
-})
+    ' - ' + 'A full-featured vue + webpack setup in VIPS')
 
 /**
  * List repos.
@@ -36,4 +33,8 @@ request({
       '  ' + chalk.blue(repo.name) +
       ' - ' + repo.description)
   })
+})
+
+process.on('exit', function () {
+  console.log()
 })
