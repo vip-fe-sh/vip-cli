@@ -121,10 +121,10 @@ function run () {
         console.log()
         console.log(chalk.cyan.bold('Execute the following commands:'))
         console.log()
-        console.log('  ' + chalk.green('cd "%s"', name))
+        console.log('  ' + chalk.green('cd "%s', name))
         console.log('  ' + chalk.green('npm install'))
         console.log('  ' + chalk.green('npm run dev'))
-        process.exit(0)
+        logger.success()
       })
     })
   }
