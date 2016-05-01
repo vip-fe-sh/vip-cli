@@ -14,7 +14,11 @@ console.log()
 console.log(
     '  ' + chalk.yellow('★') +
     '  ' + chalk.blue('vips') +
-    ' - ' + 'A full-featured vue + webpack setup in VIPS')
+    ' - ' + 'A full-featured vue + vuex + webpack setup in VIPS')
+console.log(
+    '  ' + chalk.yellow('★') +
+    '  ' + chalk.blue('vipsr') +
+    ' - ' + 'A full-featured vue + vuex + vue-router + webpack setup in VIPS')
 
 /**
  * List repos.

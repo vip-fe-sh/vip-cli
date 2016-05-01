@@ -121,7 +121,7 @@ function run () {
         console.log()
         console.log(chalk.cyan.bold('Next run the following commands:'))
         console.log()
-        logger.green('cd "%s"', name)
+        logger.green('cd %s', name)
         logger.green('npm install')
         logger.green('npm run dev')
         process.exit(0)
