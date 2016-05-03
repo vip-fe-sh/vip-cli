@@ -136,9 +136,6 @@ function checkDistBranch (template, cb) {
       var hasDist = JSON.parse(body).some(function (branch) {
         return branch.name === 'dist'
       })
-      if (!hasDist) {
-        console.log(JSON.parse(body))
-      }
       return cb(hasDist ? template + '#dist' : template)
     }
   })
@@ -151,7 +148,7 @@ function checkDistBranch (template, cb) {
  */
 
 function downloadAndGenerate (template) {
-  var tmp = '/tmp/vue-template-' + uid()
+  var tmp = '/tmp/vip-template-' + uid()
   var spinner = ora('downloading template')
   spinner.start()
   download(template, tmp, { clone: clone }, function (err) {
@@ -164,6 +161,12 @@ function downloadAndGenerate (template) {
       if (err) logger.fatal(err)
       console.log()
       logger.success('Generated "%s".', name)
+      console.log()
+      logger.cyan('Next run')
+      console.log()
+      logger.green('cd %s', name)
+      logger.green('npm install')
+      logger.green('npm run dev')
     })
   })
 }
