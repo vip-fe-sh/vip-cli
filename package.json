@@ -1,6 +1,6 @@
 {
   "name": "vip-cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simple CLI for scaffolding Vue.js projects in VIPS.",
   "preferGlobal": true,
   "bin": {
@@ -35,7 +35,7 @@
     "consolidate": "^0.14.0",
     "download-git-repo": "^0.1.1",
     "handlebars": "^4.0.5",
-    "inquirer": "^1.0.2",
+    "inquirer": "^0.12.0",
     "metalsmith": "^2.1.0",
     "minimatch": "^3.0.0",
     "ora": "^0.2.1",
