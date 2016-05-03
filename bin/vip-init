@@ -162,7 +162,7 @@ function downloadAndGenerate (template) {
       console.log()
       logger.success('Generated "%s".', name)
       console.log()
-      logger.cyan('Next run')
+      logger.cyan('---- Next run ----')
       console.log()
       logger.green('cd %s', name)
       logger.green('npm install')
