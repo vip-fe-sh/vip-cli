@@ -9,7 +9,7 @@ var chalk = require('chalk')
  */
 
 console.log()
-console.log('  Available official templates:')
+console.log('  Available VIPS templates:')
 console.log()
 console.log(
     '  ' + chalk.yellow('★') +
@@ -19,6 +19,7 @@ console.log(
     '  ' + chalk.yellow('★') +
     '  ' + chalk.blue('vipsr') +
     ' - ' + 'A full-featured vue + vuex + vue-router + webpack setup in VIPS')
+console.log()
 
 /**
  * List repos.
@@ -31,6 +32,8 @@ request({
   }
 }, function (err, res, body) {
   if (err) logger.fatal(err)
+  console.log('  Available official templates:')
+  console.log()
   JSON.parse(body).forEach(function (repo) {
     console.log(
       '  ' + chalk.yellow('★') +

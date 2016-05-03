@@ -1,6 +1,6 @@
-# vip-cli
+# vip-cli [![Build Status](https://img.shields.io/circleci/project/vip-fe-sh/vip-cli/master.svg)](https://circleci.com/gh/vip-fe-sh/vip-cli) [![npm package](https://img.shields.io/npm/v/vip-cli.svg)](https://www.npmjs.com/package/vip-cli)
 
-A simple CLI for scaffolding Vue.js projects in VIP, extended from [vue-cli](https://github.com/vuejs/vue-cli) by yyx.
+A simple CLI for scaffolding Vue.js projects in VIPS, extended from [vue-cli](https://github.com/vuejs/vue-cli) by [yyx](weibo.com/arttechdesign).
 
 ### Installation
 
@@ -13,6 +13,12 @@ $ npm install -g vip-cli
 ### Usage
 
 ``` bash
+$ vip init <template-name> <project-name>
+```
+
+Example:
+
+``` bash
 $ vip init vips vip-project
 $ cd vip-project
 $ npm install
@@ -20,6 +26,14 @@ $ npm run dev
 ```
 
 The above command pulls the template from [vip-fe-sh/template-vips](https://github.com/vip-fe-sh/template-vips), prompts for some information, and generates the project at `./vip-project/`.
+
+### VIPS Templates
+
+Current available templates include:
+
+- [vips](https://github.com/vip-fe-sh/template-vips) - A full-featured Webpack setup with hot-reload, lint-on-save, css extraction, vue-resource & vuex.
+
+- [vipsr](https://github.com/vip-fe-sh/template-vipsr) - A full-featured Webpack setup with hot-reload, lint-on-save, css extraction, vue-resource, vuex & vue-router.
 
 ### Official Templates
 
