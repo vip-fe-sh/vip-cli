@@ -9,6 +9,7 @@ const inquirer = require('inquirer')
 const async = require('async')
 const extend = Object.assign || require('util')._extend
 const generate = require('../../lib/generate')
+const metadata = require('../../lib/options')
 
 const MOCK_TEMPLATE_REPO_PATH = './test/e2e/mock-template-repo'
 const MOCK_TEMPLATE_BUILD_PATH = path.resolve('./test/e2e/mock-template-build')
@@ -37,8 +38,34 @@ describe('vip-cli', () => {
       less: true,
       sass: true
     },
-    pick: 'no'
+    pick: 'no',
+    noEscape: true
   }
+
+  it('read metadata from json', done => {
+    const meta = metadata('test-pkg', MOCK_TEMPLATE_REPO_PATH)
+    expect(meta).to.be.an('object')
+    expect(meta.prompts).to.have.property('description')
+    done()
+  })
+
+  it('read metadata from js', done => {
+    const meta = metadata('test-pkg', __dirname + '/mock-metadata-repo-js')
+    expect(meta).to.be.an('object')
+    expect(meta.prompts).to.have.property('description')
+    done()
+  })
+
+  it('helpers', done => {
+    monkeyPatchInquirer(answers)
+    const buildPath = __dirname + '/mock-metadata-repo-js'
+    generate('test', buildPath, MOCK_TEMPLATE_BUILD_PATH, err => {
+      if (err) done(err)
+      const contents = fs.readFileSync(`${MOCK_TEMPLATE_BUILD_PATH}/readme.md`, 'utf-8')
+      expect(contents).to.equal(answers.name.toUpperCase())
+      done()
+    })
+  })
 
   it('template generation', done => {
     monkeyPatchInquirer(answers)
@@ -54,7 +81,6 @@ describe('vip-cli', () => {
       ], function (file, next) {
         const template = fs.readFileSync(`${MOCK_TEMPLATE_REPO_PATH}/template/${file}`, 'utf8')
         const generated = fs.readFileSync(`${MOCK_TEMPLATE_BUILD_PATH}/${file}`, 'utf8')
-
         render(template, answers, (err, res) => {
           if (err) return next(err)
           expect(res).to.equal(generated)

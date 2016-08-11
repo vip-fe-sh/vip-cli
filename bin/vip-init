@@ -99,12 +99,13 @@ function run () {
   } else {
     checkVersion(function () {
       if (!hasSlash) {
-        // use official templates
+        // use vips template
         if (template === 'vips') {
           template = 'vip-fe-sh/template-vips'
         } else if (template === 'vipsr') {
           template = 'vip-fe-sh/template-vipsr'
         } else {
+          // use offcial template
           template = 'vuejs-templates/' + template
         }
         checkDistBranch(template, downloadAndGenerate)
@@ -126,7 +127,8 @@ function checkDistBranch (template, cb) {
   request({
     url: 'https://api.github.com/repos/' + template + '/branches',
     headers: {
-      'User-Agent': 'vip-cli'
+      'User-Agent': 'vip-cli',
+      'Authorization': 'token f1a83b9b44fb486c2f26136b29bd00c08882137d'
     }
   }, function (err, res, body) {
     if (err) logger.fatal(err)

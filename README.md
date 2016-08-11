@@ -4,7 +4,7 @@ A simple CLI for scaffolding Vue.js projects in VIPS, extended from [vue-cli](ht
 
 ### Installation
 
-Prerequisites: [Node.js](https://nodejs.org/en/) and [Git](https://git-scm.com/).
+Prerequisites: [Node.js](https://nodejs.org/) and [Git](https://git-scm.com/).
 
 ``` bash
 $ npm install -g vip-cli
@@ -31,9 +31,9 @@ The above command pulls the template from [vip-fe-sh/template-vips](https://gith
 
 Current available templates include:
 
-- [vips](https://github.com/vip-fe-sh/template-vips) - A full-featured Webpack setup with hot-reload, lint-on-save, css extraction, vue-resource & vuex.
+- [vips](https://github.com/vip-fe-sh/template-vips) - A full-featured Webpack setup with hot-reload, linting, css extraction, vue-resource & vuex.
 
-- [vipsr](https://github.com/vip-fe-sh/template-vipsr) - A full-featured Webpack setup with hot-reload, lint-on-save, css extraction, vue-resource, vuex & vue-router.
+- [vipsr](https://github.com/vip-fe-sh/template-vipsr) - A full-featured Webpack setup with hot-reload, linting, css extraction, vue-resource, vuex & vue-router.
 
 ### Official Templates
 
@@ -65,18 +65,115 @@ Where `username/repo` is the GitHub repo shorthand for your fork.
 
 The shorthand repo notation is passed to [download-git-repo](https://github.com/flipxfx/download-git-repo) so you can also use things like `bitbucket:username/repo` for a Bitbucket repo and `username/repo#branch` for tags or branches.
 
-If you would like to download from a private repository use the `--clone` flag and the cli will use `git clone` so your SHH keys are used.
+If you would like to download from a private repository use the `--clone` flag and the cli will use `git clone` so your SSH keys are used.
 
-You can also create your own template from scratch:
+### Local Templates
 
-- A template repo **must** have a `template` directory that holds the template files.
-
-- All template files will be piped through Handlebars for simple templating - `vip-cli` will automatically infer the prompts based on `{{}}` interpolations found in the files.
-
-- A template repo **may** have a `meta.json` file that provides a schema for the prompts. The schema will be passed to [prompt-for](https://github.com/segmentio/prompt-for#prompt-for) as options. See [example](https://github.com/vuejs-templates/webpack/blob/master/meta.json).
-
-While developing your template you can test via `vip-cli` with:
+Instead of a GitHub repo, you can also use a template on your local file system:
 
 ``` bash
 vip init ~/fs/path/to-custom-template my-project
 ```
+
+### Writing Custom Templates from Scratch
+
+- A template repo **must** have a `template` directory that holds the template files.
+
+- A template repo **may** have a metadata file for the template which can be either a `meta.js` or `meta.json` file. It can contain the following fields:
+
+  - `prompts`: used to collect user options data;
+
+  - `filters`: used to conditional filter files to render.
+
+  - `completeMessage`: the message to be displayed to the user when the template has been generated. You can include custom instruction here.
+
+#### prompts
+
+The `prompts` field in the metadata file should be an object hash containing prompts for the user. For each entry, the key is the variable name and the value is an [Inquirer.js question object](https://github.com/SBoudrias/Inquirer.js/#question). Example:
+
+``` json
+{
+  "prompts": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "message": "Project name"
+    }
+  }
+}
+```
+
+After all prompts are finished, all files inside `template` will be rendered using [Handlebars](http://handlebarsjs.com/), with the prompt results as the data.
+
+##### Conditional Prompts
+
+A prompt can be made conditional by adding a `when` field, which should be a JavaScript expression evaluated with data collected from previous prompts. For example:
+
+``` json
+{
+  "prompts": {
+    "lint": {
+      "type": "confirm",
+      "message": "Use a linter?"
+    },
+    "lintConfig": {
+      "when": "lint",
+      "type": "list",
+      "message": "Pick a lint config",
+      "choices": [
+        "standard",
+        "airbnb",
+        "none"
+      ]
+    }
+  }
+}
+```
+
+The prompt for `lintConfig` will only be triggered when the user answered yes to the `lint` prompt.
+
+##### Pre-registered Handlebars Helpers
+
+Two commonly used Handlebars helpers, `if_eq` and `unless_eq` are pre-registered:
+
+``` handlebars
+{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
+```
+
+##### Custom Handlebars Helpers
+
+You may want to register additional Handlebars helpers using the `helpers` property in the metadata file. The object key is the helper name:
+
+``` js
+module.exports = {
+  helpers: {
+    lowercase: str => str.toLowerCase()
+  }
+}
+```
+
+Upon registration, they can be used as follows:
+
+``` handlebars
+{{ lowercase name }}
+```
+
+#### File filters
+
+The `filters` field in the metadata file should be an object hash containing file filtering rules. For each entry, the key is a [minimatch glob pattern](https://github.com/isaacs/minimatch) and the value is a JavaScript expression evaluated in the context of prompt answers data. Example:
+
+``` json
+{
+  "filters": {
+    "test/**/*": "needTests"
+  }
+}
+```
+
+Files under `test` will only be generated if the user answered yes to the prompt for `needTests`.
+
+Note that the `dot` option for minimatch is set to `true` so glob patterns would also match dotfiles by default.
+
+### License
+
+[MIT](http://opensource.org/licenses/MIT)
