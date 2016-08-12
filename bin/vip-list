@@ -36,7 +36,7 @@ request({
   url: 'https://api.github.com/users/vuejs-templates/repos',
   headers: {
     'User-Agent': 'vip-cli',
-    'Authorization': 'token f1a83b9b44fb486c2f26136b29bd00c08882137d'
+    'Authorization': 'token bb2c54420037f894e45a3cfd57659a4dc3cae8b3'
   }
 }, function (err, res, body) {
   if (err) logger.fatal(err)
